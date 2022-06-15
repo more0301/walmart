@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="01069b40-4c0e-4045-88f2-a01fd143ece9" name="walmart_local" url="http://localhost">
+        <fileTransfer mountedRoot="$USER_HOME$/Git/walmart_robots/php" accessType="MOUNT" port="0" />
+      </webServer>
+      <webServer id="5914182e-8cd0-48af-9dfc-be94102fd86b" name="185.197.161.84_walmart" url="http://walmart">
+        <fileTransfer rootFolder="/home/dhNaz__8712UZ1Unc1/www/walmart_robots/php" accessType="SFTP" host="185.197.161.84" port="43871" sshConfigId="2788ba52-855e-478d-9fc1-e1653dd5acfa" sshConfig="185.197.161.84">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

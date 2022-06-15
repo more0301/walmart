@@ -1,0 +1,27 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Walmart\config;
+
+trait Access
+{
+    public static string $dbServer = '';
+    public static string $dbPort   = '';
+    public static string $dbName   = '';
+    public static string $dbSchema = '';
+    public static string $dbUser   = '';
+    public static string $dbPass   = '';
+
+    // current server
+    public static string $user = '';
+    public static int    $port = 0;
+    public static string $pass = '';
+    public static string $host = '';
+
+    // scraper
+    public static string $passScraper = '';
+    public static int    $portScraper = 0;
+    public static string $userScraper = '';
+    public static string $hostScraper = '';
+}
