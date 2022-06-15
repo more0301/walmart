@@ -274,14 +274,15 @@ class ReportModel
                 WHERE shop_id=' . App::$shopId;
         $this->db->run($sql_copy_delete);
 
-        $sql
-            = 'INSERT INTO walmart_ca.report (shop_id,partner_id,sku,product_name,product_category,price,currency,publish_status,status_change_reason,lifecycle_status,inventory_count,ship_methods,wpid,item_id,gtin,upc,primary_image_url,shelf_name,primary_cat_path,offer_start_date,offer_end_date,item_creation_date,item_last_updated,item_page_url,reviews_count,average_rating,searchable) VALUES ';
-        $sql_copy_insert
-            = 'INSERT INTO walmart_ca.report_copy (shop_id,partner_id,sku,product_name,product_category,price,currency,publish_status,status_change_reason,lifecycle_status,inventory_count,ship_methods,wpid,item_id,gtin,upc,primary_image_url,shelf_name,primary_cat_path,offer_start_date,offer_end_date,item_creation_date,item_last_updated,item_page_url,reviews_count,average_rating,searchable) VALUES ';
-
-        $values = '';
 
         foreach ($items as $item) {
+            $sql
+                = 'INSERT INTO walmart_ca.report (shop_id,partner_id,sku,product_name,product_category,price,currency,publish_status,status_change_reason,lifecycle_status,inventory_count,ship_methods,wpid,item_id,gtin,upc,primary_image_url,shelf_name,primary_cat_path,offer_start_date,offer_end_date,item_creation_date,item_last_updated,item_page_url,reviews_count,average_rating,searchable) VALUES ';
+            $sql_copy_insert
+                = 'INSERT INTO walmart_ca.report_copy (shop_id,partner_id,sku,product_name,product_category,price,currency,publish_status,status_change_reason,lifecycle_status,inventory_count,ship_methods,wpid,item_id,gtin,upc,primary_image_url,shelf_name,primary_cat_path,offer_start_date,offer_end_date,item_creation_date,item_last_updated,item_page_url,reviews_count,average_rating,searchable) VALUES ';
+
+            $values = '';
+
             $partner_id = $this->checkString($item['PARTNER ID']) ?
                 App::$dbh->quote($this->sanitizeString($item['PARTNER ID']))
                 : 'null';
@@ -432,16 +433,16 @@ class ReportModel
                 'searchable'           => $searchable
             ];
 
-            $values .= '(' . implode(',', $data) . '),';
+            $values = '(' . implode(',', $data) . ')';
+            $sql    .= $values . ' ON CONFLICT DO NOTHING RETURNING sku';
+
+            $sql_copy_insert .= $values . ' ON CONFLICT DO NOTHING RETURNING sku';
+            $this->db->run($sql_copy_insert);
+
+            $this->db->run($sql);
         }
 
-        $values = trim($values, ',');
-        $sql    .= $values . ' ON CONFLICT DO NOTHING RETURNING sku';
-
-        $sql_copy_insert .= $values . ' ON CONFLICT DO NOTHING RETURNING sku';
-        $this->db->run($sql_copy_insert);
-
-        return $this->db->run($sql)->rowCount();
+        return 1;
     }
 
     private function dateConvert(string $date)

@@ -120,7 +120,7 @@ class ReportController extends Controller
     private function saveToReportTable($report_array)
     {
         $result_save = $this->model->saveToReportTable($report_array);
-
+        $result_save = 1;
         App::telegramLog('Recorded in ' . App::$reportT . ': ' . $result_save);
 
         // debug
