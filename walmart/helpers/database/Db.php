@@ -28,7 +28,7 @@ class Db extends PDO
         );
     }
 
-    public function run(string $sql, array $args = []): bool
+    public function run(string $sql, array $args = []): bool|\PDOStatement
     {
         try {
             $stmt = $this->prepare($sql);
